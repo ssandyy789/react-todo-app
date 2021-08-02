@@ -15,42 +15,46 @@ const App = () => {
     id: 1,
     text: 'Gym',
     day: 'feb 5th at 9:00am',
-    remainder: true,
+    reminder: true,
 },
 {
     id: 2,
     text: 'Doctor Appointment',
     day: 'feb 5th at 11:00am',
-    remainder: true,
+    reminder: true,
 },
 {
     id: 3,
     text: 'Party Lunch',
     day: 'feb 5th at 2:00pm',
-    remainder: true,
+    reminder: true,
 },
 {
     id: 4,
     text: 'Cruise Ferry',
     day: 'feb 5th at 5:00pm',
-    remainder: true,
+    reminder: true,
 }
 ])
 
 
-const taskRemainder = (id) => {
-  console.log('remainder', id);
-}
+
 
 const deleteTask  = (id) => {
   setTasks(tasks.filter((task) => task.id !== id));
   // console.log('delete', id);
   }
 
+  const taskReminder = (id) => {
+    // console.log('remainder', id);
+      setTasks(tasks.map((task)=> task.id === id  ? {...task, reminder : !task.reminder} : task)
+    )
+  }
+
   return (
       <div className="container">
         <Header />
-        {tasks.length > 0 ? <Tasks tasks={tasks} onDelete={deleteTask} onToggle={taskRemainder} /> : 'No task to show.., please add some..!'}        
+        {tasks.length > 0 ? <Tasks tasks={tasks} onDelete={deleteTask} onToggle={taskReminder} /> : 'No task to show.., please add some..!'}        
       </div>
   )
 }
