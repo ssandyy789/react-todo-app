@@ -5,34 +5,12 @@ import Tasks from './components/Tasks';
 import { useState } from 'react';
 
 
-/*    NORMAL FUNCTION    */
-
-// function App() {  
-//   return (
-//       <div className="container">
-//         <Header />              
-//       </div>
-//   );
-// }
-
-/*     CLASS FUNCTION   */
-
-// class App extends React.Component { 
-//   render(){  
-//   return (
-//       <div className="container">
-//         <Header />              
-//       </div>
-//   );
-//   }
-// }
-
-
 /*    ARROW FUNCTION   */
 const App = () => {  
   document.title = 'Tast-Tracker';
 
   const [tasks, setTasks] = useState([
+    
     {
     id: 1,
     text: 'Gym',
@@ -56,14 +34,48 @@ const App = () => {
     text: 'Cruise Ferry',
     day: 'feb 5th at 5:00pm',
     remainder: true,
-}]
-);
+}
+])
+
+
+const taskRemainder = (id) => {
+  console.log('remainder', id);
+}
+
+const deleteTask  = (id) => {
+  setTasks(tasks.filter((task) => task.id !== id));
+  // console.log('delete', id);
+  }
+
   return (
       <div className="container">
         <Header />
-        <Tasks tasks={tasks}/>            
+        {tasks.length > 0 ? <Tasks tasks={tasks} onDelete={deleteTask} onToggle={taskRemainder} /> : 'No task to show.., please add some..!'}        
       </div>
   )
 }
+
+
+/*    NORMAL FUNCTION    */
+
+// function App() {  
+//   return (
+//       <div className="container">
+//         <Header />              
+//       </div>
+//   );
+// }
+
+/*     CLASS FUNCTION   */
+
+// class App extends React.Component { 
+//   render(){  
+//   return (
+//       <div className="container">
+//         <Header />              
+//       </div>
+//   );
+//   }
+// }
 
 export default App;
