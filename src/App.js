@@ -2,14 +2,14 @@ import React from 'react';
 import './App.css';
 import Header from './components/Header';
 import Tasks from './components/Tasks';
+import AddTask from './components/AddTask';
 import { useState } from 'react';
+
 
 
 /*    ARROW FUNCTION   */
 const App = () => {  
-  document.title = 'Tast-Tracker';
-
-  
+  const [showAddtask, setShowAddTask] = useState(false);
 
   const [tasks, setTasks] = useState([
     
@@ -41,8 +41,7 @@ const App = () => {
 
 
 const taskReminder = (id) => {
-  console.log(id);
-    setTasks(tasks.map((task) => task.id === id ? {...task, reminder: !task.reminder} : task))  
+    setTasks(tasks.map((task) => task.id === id ? {...task, reminder: !task.reminder}  : task ))  
 }
 
 const deleteTask  = (id) => {
@@ -50,11 +49,19 @@ const deleteTask  = (id) => {
   // console.log('delete', id);
   }
 
+const addTask = (task) => {
+  // console.log(task);
+  const id = Math.floor(Math.random()*1000)+1;
+  const newTask = {id, ...task}
+  setTasks([...tasks, newTask])
+}
+
 
 
   return (
       <div className="container">
-        <Header />
+        <Header onAdd = {() => setShowAddTask(!showAddtask)}  showAdd={showAddtask} />
+        {showAddtask && <AddTask  onAdd={addTask}/>}
         {tasks.length > 0 ? <Tasks tasks={tasks} onDelete={deleteTask} onToggle={taskReminder} /> : 'No task to show.., please add some..!'}        
       </div>
   )
